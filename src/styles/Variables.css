@@ -1,0 +1,15 @@
+/* використання глобальних змінних стилю */
+html[data-theme="dark"] {
+  --background-color: gray;
+  --text-color: whitesmoke;
+  --border-color: cyan;
+  --input-background: lightgray;
+}
+
+/* використання глобальних змінних стилю */
+html[data-theme="light"] {
+  --background-color: white;
+  --text-color: dark;
+  --border-color: teal;
+  --input-background: white;
+}

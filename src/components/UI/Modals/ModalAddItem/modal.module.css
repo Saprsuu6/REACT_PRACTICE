@@ -1,0 +1,37 @@
+.myModal {
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    display: none;
+    
+    backdrop-filter: blur(2px);
+}
+
+.myModalContent {
+    padding: 25px;
+    background: lightblue;
+    border-radius: 20px;
+    min-width: 250px;
+}
+
+.myModalMenu {
+    display: flex;
+    justify-content: end;
+}
+
+.myModalClose {
+    height: 20px;
+    width: 20px;
+    background: url('../../icons/cancel.png') no-repeat center;
+    background-size: contain;
+}
+
+.myModal.active {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    height: 100%;
+    width: 100%;
+}

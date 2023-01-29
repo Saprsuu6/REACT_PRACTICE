@@ -6,6 +6,11 @@
   color: var(--text-color);
 }
 
+ul,
+li {
+  list-style: none;
+}
+
 .menu {
   display: flex;
   margin-top: 15px;

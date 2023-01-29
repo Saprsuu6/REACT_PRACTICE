@@ -4,7 +4,7 @@ import "../styles/Post.css";
 import PostItem from "./PostItem";
 
 const PostList = ({ posts, title, remove }) => {
-  const nodeRef = React.useRef(null);
+  //const nodeRef = React.useRef(null);
 
   if (posts.length === 0) {
     return <h1 style={{ textAlign: "center" }}>Posts were not found</h1>;
@@ -16,7 +16,7 @@ const PostList = ({ posts, title, remove }) => {
       <TransitionGroup>
         {posts.map((post, index) => (
           <CSSTransition
-            nodeRef={nodeRef}
+            // nodeRef={nodeRef}
             key={post.id}
             timeout={500}
             classNames="post"

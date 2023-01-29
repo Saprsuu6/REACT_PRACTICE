@@ -2,24 +2,24 @@ import ChangeTheme from "./components/TopMenu";
 import { useTheme } from "./components/Hooks/useTheme";
 import PostFilters from "./components/PostFilters";
 import PostForm from "./components/PostForm";
-import PostList from "./components/PostList";
 import MyModal from "./components/UI/Modals/ModalAddItem/Modal";
 import "./styles/App.css";
 import "./styles/Variables.css";
 import { usePosts } from "./components/Hooks/usePosts";
 import { useEffect, useState } from "react";
 import PostService from "./components/API/PostService";
-import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
-import PostSceleton from "./components/CustumSceleton/PostSceleton";
+import { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import { useFetching } from "./components/Hooks/useFetching";
+import { getPagesCount } from "./utils/pages";
+import { usePagination } from "./components/Hooks/usePagination";
+import PreListLoading from "./components/PrePostList";
+import MyButton from "./components/UI/Button/Button";
+import Pagination from "./components/UI/Pagination/Pagination";
 
 function App() {
   // hooks
-  const [posts, setPosts] = useState([
-    { id: 1, title: "JavaScript1", body: "JS" },
-    { id: 2, title: "JavaScript3", body: "Jasdasd" },
-    { id: 3, title: "JavaScript2", body: "Jas" },
-  ]);
+  const [posts, setPosts] = useState([]);
 
   const { theme, setTheme } = useTheme(); // використання кастомого хуку
   const [modal, setModal] = useState(false);
@@ -32,24 +32,29 @@ function App() {
 
   const sortedAndSearchedPosts = usePosts(posts, filter);
 
-  useEffect(() => {
-    fetchPosts();
-  }, []);
+  const [pagesArray, pagination, setPagination] = usePagination();
 
-  const [isPostsLoading, setIsPostsLoading] = useState(false);
+  const [fetchPost, isPostsLoading, postError] = useFetching(async () => {
+    let data = await PostService.Get(pagination.limit, pagination.page).then(
+      (data) => {
+        return data;
+      }
+    );
+
+    setPosts(data.data);
+    let totalCount = data.totalCount;
+
+    setPagination({
+      ...pagination,
+      totalPages: getPagesCount(totalCount, pagination.limit),
+    });
+  });
+
+  useEffect(() => {
+    fetchPost();
+  }, [pagination.page]);
 
   // other methods
-  async function fetchPosts() {
-    setIsPostsLoading(true);
-    setTimeout(async () => {
-      // болванка
-      await PostService.getAll().then((data) => {
-        setPosts(data);
-      });
-      setIsPostsLoading(false);
-    }, 5000);
-  }
-
   const CreatePost = (newPost) => {
     setPosts([...posts, newPost]);
     setModal(false);
@@ -57,6 +62,10 @@ function App() {
 
   const removePost = (post) => {
     setPosts(posts.filter((p) => p.id !== post.id));
+  };
+
+  const changePage = (page) => {
+    setPagination({ ...pagination, page: page });
   };
 
   return (
@@ -68,22 +77,17 @@ function App() {
         <ChangeTheme setModal={setModal} setTheme={setTheme}></ChangeTheme>
         <PostFilters filter={filter} setFilter={setFilter}></PostFilters>
         <hr style={{ margin: "15px 0 15px 0" }} />
-        {isPostsLoading ? (
-          Array(10)
-            .fill(0)
-            .map((_, i) => (
-              <PostSceleton
-                style={{ margin: "10px 0px 10px 0px" }}
-                key={i}
-              ></PostSceleton>
-            ))
-        ) : (
-          <PostList
-            remove={removePost}
-            posts={sortedAndSearchedPosts}
-            title={"Posts"}
-          ></PostList>
-        )}
+        <PreListLoading
+          isPostsLoading={isPostsLoading}
+          error={postError}
+          removePost={removePost}
+          sortedAndSearchedPosts={sortedAndSearchedPosts}
+        ></PreListLoading>
+        <Pagination
+          changePage={changePage}
+          pagesArray={pagesArray}
+          pagination={pagination}
+        ></Pagination>
       </SkeletonTheme>
     </div>
   );

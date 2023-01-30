@@ -1,5 +1,6 @@
-import MyInput from "./UI/Input/Input";
-import MySelect from "./UI/Select/Select";
+import React from "react";
+import MyInput from "./UI/Input/input";
+import MySelect from "./UI/Select/select"
 
 const PostFilters = ({ filter, setFilter }) => {
   return (

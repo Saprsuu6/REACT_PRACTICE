@@ -6,6 +6,8 @@ import PostItem from "./PostItem";
 const PostList = ({ posts, title, remove }) => {
   //const nodeRef = React.useRef(null);
 
+  //let reversed = posts.reverse()
+
   if (posts.length === 0) {
     return <h1 style={{ textAlign: "center" }}>Posts were not found</h1>;
   }

@@ -70,8 +70,8 @@ function Posts() {
   };
 
   return (
-    <div className="App">
-      <SkeletonTheme baseColor="#313131" highlightColor="#525252">
+    <div>
+      <SkeletonTheme baseColor="rgba(128, 128, 128, 0.514)" highlightColor="rgba(184, 184, 184, 0.514)">
         <MyModal visible={modal} setVisible={setModal}>
           <PostForm create={CreatePost}></PostForm>
         </MyModal>

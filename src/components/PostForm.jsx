@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import MyButton from "./UI/Button/Button";
-import MyInput from "./UI/Input/Input";
+import MyButton from "./UI/Button/button";
+import MyInput from "./UI/Input/input";
 
 const PostForm = ({ create }) => {
   const [post, setPost] = useState({ title: "", description: "" });

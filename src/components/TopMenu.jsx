@@ -1,5 +1,5 @@
 import React from "react";
-import MyButton from "./UI/Button/Button";
+import MyButton from "./UI/Button/button";
 import "../styles/App.css";
 
 const ChangeTheme = ({ setModal, setTheme }) => {
@@ -12,6 +12,8 @@ const ChangeTheme = ({ setModal, setTheme }) => {
             borderRight: "0px",
             borderTopLeftRadius: "7px",
             borderBottomLeftRadius: "7px",
+            borderTopRightRadius: "0",
+            borderBottomRightRadius: "0"
           }}
           onClick={() => setTheme("light")}
         >
@@ -21,6 +23,8 @@ const ChangeTheme = ({ setModal, setTheme }) => {
           style={{
             borderTopRightRadius: "7px",
             borderBottomRightRadius: "7px",
+            borderTopLeftRadius: "0",
+            borderBottomLeftRadius: "0"
           }}
           onClick={() => setTheme("dark")}
         >

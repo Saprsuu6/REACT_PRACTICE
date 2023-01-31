@@ -36,7 +36,7 @@ function Posts() {
   const [pagesArray, pagination, setPagination] = usePagination();
 
   const [fetchPost, isPostsLoading, postError] = useFetching(async () => {
-    let data = await PostService.Get(pagination.limit, pagination.page).then(
+    let data = await PostService.GetPosts(pagination.limit, pagination.page).then(
       (data) => {
         return data;
       }

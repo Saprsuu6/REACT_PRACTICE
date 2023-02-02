@@ -15,7 +15,7 @@ export default class PostService {
     return responce;
   }
 
-  static async GetCurrentById(id) {     
+  static async GetCurrentById(id) {
     const responce = await fetch(
       `https://jsonplaceholder.typicode.com/posts/${id}`,
       {
